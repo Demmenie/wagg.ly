@@ -36,9 +36,16 @@ const server = () => {
         res.render('index.ejs', {});
     });
 
+    // =================================
+    // A Login page
+    this.app.get('/login', (req, res) => {
+        // Render page
+        res.render('login.ejs', {});
+    });
+
     //Listens listens for the search form to be returned.
-    this.app.post('/q', (req, res) => {
-        const query = req.body.search;
+    this.app.post('/loginSub', (req, res) => {
+
 
         res.redirect(`/search?q=${query}`);
     });
