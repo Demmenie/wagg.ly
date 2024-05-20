@@ -37,20 +37,30 @@ body {
 }
 
 .topbar {
+  border: #525964;
+  border-width: 1px;
   display: inline-block;
   align: left;
   margin: left;
   padding: 5px;
 }
 
+.partition {
+  border: #525964;
+  border-width: 1px;
+}
+
 #title-text{
-  position: relative;
-  top: 15px;
+  position: absolute;
+  top: 5px;
   color: #fff;
-  font-size: 50px;
+  font-size: 37px;
   text-shadow: 1px 1px black, 2px 2px black, 3px 3px black, 4px 4px black,
     5px 5px black, 6px 6px black;
+}
 
+#left-side{
+  ;
 }
 
 #text{
@@ -63,7 +73,7 @@ body {
 }
 
 #icon{
-  padding: 15px;
+  padding: 5px;
 }
 
 #centre-box{

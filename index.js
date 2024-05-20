@@ -37,20 +37,6 @@ const server = () => {
     });
 
     // =================================
-    // A Login page
-    this.app.get('/login', (req, res) => {
-        // Render page
-        res.render('login.ejs', {});
-    });
-
-    //Listens listens for the search form to be returned.
-    this.app.post('/loginSub', (req, res) => {
-
-
-        res.redirect(`/search?q=${query}`);
-    });
-
-    // =================================
     //This calls the python search function and returns the completed view.
     this.app.get('/search', async (req, res) => {
         /*Calling the cleaning function to make sure that the input is a
@@ -96,12 +82,6 @@ const server = () => {
                 res.redirect(`/url_deny?q=${req.query.q}`);
             }
         }.bind(this, pageRender));
-    });
-
-    // =================================
-    // Sends a specific page when the search term isn't clean.
-    this.app.get('/url_deny', (req, res) => {
-        res.render('url_deny', {searchTerm: req.query.q});
     });
 
     // =================================
