@@ -9,6 +9,30 @@ const fs = require('fs');
 const morgan = require('morgan');
 require('dotenv').config({path: './config.env'});
 
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://skullburry1:KXVHJHwVA5e7TJ3Z@cluster0.clpfqyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+});
+
+async function run() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Connected to MongoDB");
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
 
 //------------------------------------------------------------------------------
 // Initialise server variables
@@ -20,6 +44,11 @@ const init = () => {
     this.app.use(morgan('combined'));
     server.bind(this)();
     console.log('User connected.');
+
+    run().catch(console.dir);
+    const db = client.db('platform');
+    this.walkers = db.collection('walkers');
+    this.owners = db.collection('owners');
 }
 
 
@@ -34,6 +63,13 @@ const server = () => {
     this.app.get('/', (req, res) => {
         // Render page
         res.render('index.ejs', {});
+    });
+
+    this.app.get('/getWalkers', (req, res) => {
+        let walkersList = this.walkers.find({})
+
+        // Render page
+        res.send(walkersList)
     });
 
     // =================================
