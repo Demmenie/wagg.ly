@@ -65,11 +65,17 @@ const server = () => {
         res.render('index.ejs', {});
     });
 
+    //A function that returns all walkers in the DB in json form.
     this.app.get('/getWalkers', (req, res) => {
-        let walkersList = this.walkers.find({})
+        
+        async function retrieveWalkers(walkersDB) {
+            return await walkersDB.find({}).toArray();
+        }
 
+        let walkersList = retrieveWalkers(this.walkers)
+        console.log(walkersList)
         // Render page
-        res.send(walkersList)
+        res.json(walkersList)
     });
 
     // =================================
