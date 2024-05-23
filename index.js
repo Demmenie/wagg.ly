@@ -21,18 +21,20 @@ const client = new MongoClient(uri, {
     }
 });
 
-async function run() {
-    try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Connected to MongoDB");
-    } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }
+let db, walkers; 
+
+async function connectDB() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+    db = client.db('platform');
+    walkers = db.collection('walkers'); 
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err);
+    process.exit(1); // Exit on connection failure
+  }
 }
+
 
 //------------------------------------------------------------------------------
 // Initialise server variables
@@ -45,7 +47,7 @@ const init = () => {
     server.bind(this)();
     console.log('User connected.');
 
-    run().catch(console.dir);
+    connectDB();
     const db = client.db('platform');
     this.walkers = db.collection('walkers');
     this.owners = db.collection('owners');
@@ -65,17 +67,15 @@ const server = () => {
         res.render('index.ejs', {});
     });
 
-    //A function that returns all walkers in the DB in json form.
-    this.app.get('/getWalkers', (req, res) => {
-        
-        async function retrieveWalkers(walkersDB) {
-            return await walkersDB.find({}).toArray();
+    // A function that returns all walkers in the DB in json form.
+    this.app.get('/getWalkers', async (req, res) => { 
+        try {
+            const walkersList = await walkers.find({}).toArray(); // Await the query
+            res.json(walkersList);
+        } catch (err) {
+            console.error("Error retrieving walkers:", err);
+            res.status(500).send("Internal Server Error");
         }
-
-        let walkersList = retrieveWalkers(this.walkers)
-        console.log(walkersList)
-        // Render page
-        res.json(walkersList)
     });
 
     // =================================

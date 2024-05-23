@@ -3,10 +3,11 @@
 //Chico Demmenie
 
 function organise(){
+  console.log("Hello");
 
-   function getWalkers() {
+  function getWalkers() {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", 'getWalkers', false ); // false for synchronous request
+    xmlHttp.open( "GET", '/getWalkers', false ); // false for synchronous request
     xmlHttp.send( null );
     return xmlHttp.responseText;
   }
