@@ -63,9 +63,10 @@
 }
 .column {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex-direction: row;
   line-height: normal;
-  width: 34%;
+  width: 98%;
   margin-left: 0;
 }
 @media (max-width: 991px) {
@@ -73,13 +74,22 @@
       width: 100%;
   }
 }
-.profile-container {
-  display: inline;
+.column-title-card{
+  border: 1px solid rgba(0, 0, 0, 1);
+}
+.column-title{
+  font-family: Inter, sans-serif;
+}
+.container {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  flex: 1;
   gap: 0;
+  min-width: 32%;
 }
 @media (max-width: 991px) {
-  .profile-container {
+  .container {
       max-width: 100%;
       margin-top: 20px;
       flex-wrap: wrap;
@@ -99,6 +109,7 @@
   }
 }
 .name-card {
+  font-weight: bold;
   border: 1px solid rgba(0, 0, 0, 1);
   background-color: #fff;
   padding: 10px 80px 10px 11px;
@@ -173,7 +184,11 @@
 .person-name {
   font-family: Inter, sans-serif;
 }
-.distance {
+.bio {
+  font-family: Inter, sans-serif;
+  margin-top: 23px;
+}
+.dogCount {
   font-family: Inter, sans-serif;
   margin-top: 23px;
 }

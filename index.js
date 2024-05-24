@@ -12,7 +12,7 @@ require('dotenv').config({path: './config.env'});
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://skullburry1:KXVHJHwVA5e7TJ3Z@cluster0.clpfqyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// Creating a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -21,7 +21,8 @@ const client = new MongoClient(uri, {
     }
 });
 
-let db, walkers; 
+// Setting the database 
+let db, walkers, owners; 
 
 async function connectDB() {
   try {
@@ -29,6 +30,7 @@ async function connectDB() {
     console.log("Connected to MongoDB");
     db = client.db('platform');
     walkers = db.collection('walkers'); 
+    owners = db.collection('owners');
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);
     process.exit(1); // Exit on connection failure
@@ -67,6 +69,11 @@ const server = () => {
         res.render('index.ejs', {});
     });
 
+    this.app.get('/newOwner', (req, res) => {
+        // Render page
+        res.render('newOwner.ejs', {});
+    });
+
     // A function that returns all walkers in the DB in json form.
     this.app.get('/getWalkers', async (req, res) => { 
         try {
@@ -78,53 +85,27 @@ const server = () => {
         }
     });
 
-    // =================================
-    //This calls the python search function and returns the completed view.
-    this.app.get('/search', async (req, res) => {
-        /*Calling the cleaning function to make sure that the input is a
-        link and not something else.*/
-        const cleaning = new Promise(async (resolve) => {
-            resolve(await python`search.DBSearch().cleaning(
-                ${req.query.q}
-            )`);
-        });
-
-        this.clean = await cleaning;
-        cleaning.then(function(){
-            //If the input is clean then we'll go look for it.
-            
-            if (this.clean == true) {
-                async function sSearch() {
-                    return await python`search.DBSearch().standard(
-                        ${req.query.q}, 
-                        ${this.uList}
-                    )`;
-                }
-                sSearch.bind(this)().then(function(sResponse) {
-                    console.log(sResponse)
-
-                    /*If the search returns 'null' then there's nothing to
-                    show the user*/
-                    if (sResponse == null) {
-                        res.render('notFound', {searchTerm: req.query.q});
-                    } else if (sResponse == "download_failed"){
-                        sendErr(req, res, 500);
-                    } else {
-                        let page = pageRender(sResponse).toString();
-                        page = page.replaceAll(",", "");
-                        page = page.replaceAll("**", ",");
-                        
-                        res.render('search',
-                        {page: page,
-                            searchTerm: req.query.q});
-                    }
-                }.bind(pageRender));
-
-            } else {
-                res.redirect(`/url_deny?q=${req.query.q}`);
-            }
-        }.bind(this, pageRender));
+    // A function that returns all walkers in the DB in json form.
+    this.app.get('/getOwners', async (req, res) => { 
+        try {
+            const ownersList = await owners.find({}).toArray(); // Await the query
+            res.json(ownersList);
+        } catch (err) {
+            console.error("Error retrieving owners:", err);
+            res.status(500).send("Internal Server Error");
+        }
     });
+
+    // A function that returns all walkers in the DB in json form.
+    this.app.post('/getOwners', async (req, res) => { 
+        try {
+            req.
+        } catch (err) {
+            console.error("Error retrieving owners:", err);
+            res.status(500).send("Internal Server Error");
+        }
+    });
+
 
     // =================================
     // Returns any document within the 'assets' directory.
