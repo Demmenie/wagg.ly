@@ -69,6 +69,11 @@ const server = () => {
         res.render('index.ejs', {});
     });
 
+    this.app.get('/newWalker', (req, res) => {
+        // Render page
+        res.render('newWalker.ejs', {});
+    });
+
     this.app.get('/newOwner', (req, res) => {
         // Render page
         res.render('newOwner.ejs', {});
@@ -97,6 +102,7 @@ const server = () => {
     });
 
     // A function that returns all walkers in the DB in json form.
+    /*
     this.app.post('/getOwners', async (req, res) => { 
         try {
             req.
@@ -105,7 +111,7 @@ const server = () => {
             res.status(500).send("Internal Server Error");
         }
     });
-
+*/
 
     // =================================
     // Returns any document within the 'assets' directory.

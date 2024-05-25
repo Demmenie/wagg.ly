@@ -7,7 +7,7 @@
   border: 1px solid rgba(0, 0, 0, 1);
   background-color: #fff;
   display: flex;
-  width: 100%;
+  width: 92%;
   gap: 20px;
   font-size: 36px;
   color: #000;
@@ -17,7 +17,7 @@
 }
 @media (max-width: 991px) {
   .header {
-      max-width: 100%;
+      max-width: 97%;
       flex-wrap: wrap;
       padding-left: 20px;
       white-space: initial;
@@ -66,7 +66,7 @@
   flex-wrap: wrap;
   flex-direction: row;
   line-height: normal;
-  width: 98%;
+  width: 100%;
   margin-left: 0;
 }
 @media (max-width: 991px) {
@@ -78,6 +78,12 @@
   border: 1px solid rgba(0, 0, 0, 1);
 }
 .column-title{
+  font-family: Inter, sans-serif;
+}
+.new-card{
+  border: 1px solid rgba(0, 0, 0, 1);
+}
+.new-text{
   font-family: Inter, sans-serif;
 }
 .container {
