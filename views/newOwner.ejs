@@ -26,7 +26,49 @@
             </div>
         </header>
         <main class="content">
-            <form action="/addOwner" method="post"></form>
+            <div class="flex-container">
+                <form method="post" class="container" action="/addOwner">
+                    <div id="left-side" class="column">
+                        <p>Name:</p>
+                        <input id="owner-name" type="text" required>
+                        <p>Bio:</p>
+                        <input id="bio" type="text" required>
+                        <p style="font-weight: bold;">Address:</p>
+                        <p>First line:</p>
+                        <input id="street" type="text" required>
+                        <p>Town:</p>
+                        <input id="town" type="text" required>
+                        <p>County:</p>
+                        <input id="county" type="text" required>
+                        <p>Postcode:</p>
+                        <input id="postcode" type="text" required>
+                        <input type="submit">
+                    </div>
+                    <div id="centre" class="column">
+                        <div id="dogs-list">
+                            <div id="dog-1">
+                                <h2>Dog 1</h2>
+                                <p>Name:</p>
+                                <input id="dog-name-1" type="text" required>
+                                <p>Age:</p>
+                                <input id="dog-age-1" type="text" required>
+                                <p>Size:</p>
+                                <input id="dog-size-1" type="text" required>
+                            </div>
+                        </div>
+                        <div id="new-dog-button">
+                        </div>
+                    </div>
+                    <div id="bottom" class="column">
+                    </div>
+                </form>
+                <div id="new-dog-button">
+                    <button id="new-dog" onclick="addNewDog()">+ Add another dog</button>
+                </div>
+                <script type="text/javascript" src="/static/addNewElement.js">
+                    document.addEventListener('new-dog', addNewDog)
+                </script>
+            </div>
         </main>
     </div>
 </html>

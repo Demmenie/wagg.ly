@@ -1,3 +1,9 @@
+p {
+  font-family: Inter, sans-serif;
+}
+h2 {
+  font-family: Inter, sans-serif;
+}
 .wrapper {
   background-color: #fff;
   display: flex;
@@ -88,8 +94,8 @@
 }
 .container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  flex-grow: 1;
   flex: 1;
   gap: 0;
   min-width: 32%;
