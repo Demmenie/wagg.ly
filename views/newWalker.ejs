@@ -26,9 +26,30 @@
             </div>
         </header>
         <main class="content">
-            <form action="/addOwner" method="post">
-                <
-            </form>
+            <div class="flex-container">
+                <form method="post" class="container" action="/addWalker">
+                    <div id="left-side" class="column">
+                        <p>Name:</p>
+                        <input name="name" id="name" type="text" required>
+                        <p>Bio:</p>
+                        <input name="bio" id="bio" type="text" required>
+                        <p>How many dogs can you walk at a time?</p>
+                        <input name="dpw" id="dpw" type="text" required>
+                        <p>How many walks can you do each day?</p>
+                        <input name="wpd" id="wpd" type="text" required>
+                        <p style="font-weight: bold;">Address:</p>
+                        <p>First line:</p>
+                        <input name="street" id="street" type="text" required>
+                        <p>Town:</p>
+                        <input name="town" id="town" type="text" required>
+                        <p>County:</p>
+                        <input name="county" id="county" type="text" required>
+                        <p>Postcode:</p>
+                        <input name="postcode" id="postcode" type="text" required>
+                        <input name="submit" type="submit">
+                    </div>
+                </form>
+            </div>
         </main>
     </div>
 </html>

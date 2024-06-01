@@ -59,6 +59,7 @@ h2 {
 .flex-container {
   gap: 20px;
   display: flex;
+  flex-direction: column;#
 }
 @media (max-width: 991px) {
   .flex-container {
@@ -74,6 +75,8 @@ h2 {
   line-height: normal;
   width: 100%;
   margin-left: 0;
+  padding: 10px;
+  gap: 10px;
 }
 @media (max-width: 991px) {
   .column {

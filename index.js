@@ -10,6 +10,7 @@ const morgan = require('morgan');
 require('dotenv').config({path: './config.env'});
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { name } = require('ejs');
 const uri = "mongodb+srv://skullburry1:KXVHJHwVA5e7TJ3Z@cluster0.clpfqyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Creating a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -21,9 +22,10 @@ const client = new MongoClient(uri, {
     }
 });
 
-// Setting the database 
+// Setting the database variables
 let db, walkers, owners; 
 
+// A fucntion for establishing a connection to the database
 async function connectDB() {
   try {
     await client.connect();
@@ -44,10 +46,11 @@ const init = () => {
     // initialise express app
     this.app = express();
     this.app.set('view engine', 'ejs');
-    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.urlencoded());
     this.app.use(morgan('combined'));
     server.bind(this)();
-    console.log('User connected.');
+    console.log('Server connected.');
+
 
     connectDB();
     const db = client.db('platform');
@@ -82,7 +85,7 @@ const server = () => {
     // A function that returns all walkers in the DB in json form.
     this.app.get('/getWalkers', async (req, res) => { 
         try {
-            const walkersList = await walkers.find({}).toArray(); // Await the query
+            const walkersList = await this.walkers.find({}).toArray(); // Await the query
             res.json(walkersList);
         } catch (err) {
             console.error("Error retrieving walkers:", err);
@@ -93,10 +96,58 @@ const server = () => {
     // A function that returns all walkers in the DB in json form.
     this.app.get('/getOwners', async (req, res) => { 
         try {
-            const ownersList = await owners.find({}).toArray(); // Await the query
+            const ownersList = await this.owners.find({}).toArray(); // Await the query
             res.json(ownersList);
         } catch (err) {
             console.error("Error retrieving owners:", err);
+            res.status(500).send("Internal Server Error");
+        }
+    });
+
+    // A function that returns all owners in the DB in json form.
+    this.app.post('/addOwner', async (req, res) => { 
+        try {
+            console.log(req.body)
+            const owner = {
+                'name': req.body.name,
+                'bio': req.body.bio,
+                'address': {
+                    'street': req.body.street,
+                    'town': req.body.town,
+                    'county': req.body.county,
+                    'postcode': req.body.postcode
+                }
+            }
+
+            await this.owners.insertOne(owner);
+
+            res.redirect('/')
+        } catch (err) {
+            console.error("Error adding owner:", err);
+            res.status(500).send("Internal Server Error");
+        }
+    });
+
+    // A function that returns all owners in the DB in json form.
+    this.app.post('/addWalker', async (req, res) => { 
+        try {
+            const walker = {
+                'name': req.body.name,
+                'bio': req.body.bio,
+                'address': {
+                    'street': req.body.street,
+                    'town': req.body.town,
+                    'county': req.body.county,
+                    'postcode': req.body.postcode
+                },
+                'dogsPerWalk': req.body.dpw,
+                'walksPerDay': req.body.wpd
+            }
+            await this.walkers.insertOne(walker);
+
+            res.redirect('/')
+        } catch (err) {
+            console.error("Error adding owner:", err);
             res.status(500).send("Internal Server Error");
         }
     });

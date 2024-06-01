@@ -1,6 +1,5 @@
-//08/07/2023
-//Aethra/web/static/organise.js
-//Chico Demmenie
+//28/05/24
+//Wagg.ly/static/organise.js
 
 // A function to fetch walkers data from the API endpoint
 async function fetchWalkers() {
@@ -76,7 +75,6 @@ async function addOwners() {
 
   for (let i = 0; i < owners.length; i++) {
     let owner = owners[i];
-    let dogCount = owner.dogs.length
 
     // Fetching the container element
     const containerElement = document.getElementById('owners-container');
@@ -96,7 +94,6 @@ async function addOwners() {
                 <div class="profile-info">
                   <div class="person-name">${owner.name}</div>
                   <div class="bio">${owner.bio}</div>
-                  <div class="dogCount">Number of Dogs: ${dogCount}</div>
                 </div>
               </div>
             </div>
