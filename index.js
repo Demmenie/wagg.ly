@@ -1,14 +1,16 @@
-/** 22/11/2022
+/** 03/06/2024
  *  Chico Demmenie
  *  Wagg.ly/index.js
  */
 
+// Importing required modules
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
 require('dotenv').config({path: './config.env'});
 
+// Setting required variables for MongoDB
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { name } = require('ejs');
 const uri = "mongodb+srv://skullburry1:KXVHJHwVA5e7TJ3Z@cluster0.clpfqyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -21,9 +23,6 @@ const client = new MongoClient(uri, {
       deprecationErrors: true,
     }
 });
-
-// Setting the database variables
-let db, walkers, owners; 
 
 // A fucntion for establishing a connection to the database
 async function connectDB() {
@@ -51,7 +50,7 @@ const init = () => {
     server.bind(this)();
     console.log('Server connected.');
 
-
+    // Calling connect function to create MongoDB connection and set collections
     connectDB();
     const db = client.db('platform');
     this.walkers = db.collection('walkers');
@@ -68,21 +67,20 @@ const server = () => {
     // listens for activity on root page
     // takes request, response
     this.app.get('/', (req, res) => {
-        // Render page
         res.render('index.ejs', {});
     });
 
+    // A page to create new walkers
     this.app.get('/newWalker', (req, res) => {
-        // Render page
         res.render('newWalker.ejs', {});
     });
 
+    // A page to create new owners
     this.app.get('/newOwner', (req, res) => {
-        // Render page
         res.render('newOwner.ejs', {});
     });
 
-    // A function that returns all walkers in the DB in json form.
+    // A REST API GET function that returns all walkers in the DB in json form.
     this.app.get('/getWalkers', async (req, res) => { 
         try {
             const walkersList = await this.walkers.find({}).toArray(); // Await the query
@@ -93,7 +91,7 @@ const server = () => {
         }
     });
 
-    // A function that returns all walkers in the DB in json form.
+    // A REST API GET function that returns all owners in the DB in json form.
     this.app.get('/getOwners', async (req, res) => { 
         try {
             const ownersList = await this.owners.find({}).toArray(); // Await the query
@@ -104,7 +102,7 @@ const server = () => {
         }
     });
 
-    // A function that returns all owners in the DB in json form.
+    // A REST API POST function that allows users to add new owners to the DB
     this.app.post('/addOwner', async (req, res) => { 
         try {
             console.log(req.body)
@@ -128,7 +126,7 @@ const server = () => {
         }
     });
 
-    // A function that returns all owners in the DB in json form.
+    // A REST API POST function that allows users to add new walkers to the DB
     this.app.post('/addWalker', async (req, res) => { 
         try {
             const walker = {
@@ -151,18 +149,7 @@ const server = () => {
             res.status(500).send("Internal Server Error");
         }
     });
-
-    // A function that returns all walkers in the DB in json form.
-    /*
-    this.app.post('/getOwners', async (req, res) => { 
-        try {
-            req.
-        } catch (err) {
-            console.error("Error retrieving owners:", err);
-            res.status(500).send("Internal Server Error");
-        }
-    });
-*/
+    
 
     // =================================
     // Returns any document within the 'assets' directory.
