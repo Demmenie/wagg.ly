@@ -59,7 +59,7 @@ h2 {
 .flex-container {
   gap: 20px;
   display: flex;
-  flex-direction: column;#
+  flex-direction: column;
 }
 @media (max-width: 991px) {
   .flex-container {
