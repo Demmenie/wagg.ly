@@ -12,7 +12,6 @@ require('dotenv').config({path: './config.env'});
 
 // Setting required variables for MongoDB
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const { name } = require('ejs');
 const uri = "mongodb+srv://skullburry1:KXVHJHwVA5e7TJ3Z@cluster0.clpfqyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Creating a MongoClient with a MongoClientOptions object to set the Stable API version

@@ -15,5 +15,5 @@ the directory, then using npm with Node 20 run `npm install` and `npm start`.
 Using the Azure plugin for VSCode, we can craete a Web App instance and deploy
 the code in a matter of minutes.
 
-The result is available at: bs3928-waggly.azurewebsites.net
+The result is available at: https://bs3928-waggly.azurewebsites.net
 The Github repository can be found at: https://github.com/Demmenie/wagg.ly
